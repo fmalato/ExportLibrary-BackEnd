@@ -3,7 +3,7 @@ package businessLogic;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-//import databaseManagement.CategoryDao;
+import databaseManagement.CategoryDao;
 
 
 public class Controller {
@@ -17,10 +17,9 @@ public class Controller {
         categories.add("Report");
         categories.add("Brochure");
 
-        //CategoryDao categoryDao = new CategoryDao();
+        CategoryDao categoryDao = new CategoryDao();
 
-        //return categoryDao.categories();
-        return categories;
+        return categoryDao.categories();
     }
 
     public static JSONArray getDBFormCategory(String category) {
