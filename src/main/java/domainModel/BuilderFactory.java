@@ -1,7 +1,8 @@
 package domainModel;
 
-import java.util.Arrays;
 import exportLibrary.DocExt;
+import java.util.Arrays;
+
 
 public class BuilderFactory {
 

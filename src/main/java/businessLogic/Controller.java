@@ -1,12 +1,27 @@
 package businessLogic;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import domainModel.Builder;
+import domainModel.BuilderFactory;
+import exportLibrary.DocExt;
+import exportLibrary.Utils;
+import formModels.Form;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 
 import databaseManagement.CategoryDao;
 
 
 public class Controller {
+
+    private final BuilderFactory builderFactory;
+
+    public Controller() {
+        this.builderFactory = new BuilderFactory();
+    }
 
     public static JSONArray getDBCategories() {
         // Chiamo il Dao che fa la query sulle categorie e me le restituisce
@@ -55,5 +70,16 @@ public class Controller {
 
         return form;
     }
+
+    public void generateDocument(DocExt ext, String fileName, String templateName) {
+        Builder b = this.builderFactory.createBuilder(ext);
+        try {
+            b.generateDoc(fileName, templateName);
+        } catch(IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
