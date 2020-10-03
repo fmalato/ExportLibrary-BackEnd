@@ -1,6 +1,7 @@
 package formModels;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Date;
 
 import exportLibrary.DocExt;
@@ -13,7 +14,13 @@ public class CurriculumForm extends Form {
     private Date dateofBirth;
     private String address;
 
-    private final DocExt documentType = DocExt.DOCX;
+    public CurriculumForm(String name, String category) {
+        super(name, DocExt.DOCX, category);
+        this.firstname = null;
+        this.lastname = null;
+        this.dateofBirth = null;
+        this.address = null;
+    }
 
     public String getFirstname() {
         return firstname;

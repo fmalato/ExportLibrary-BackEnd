@@ -1,11 +1,5 @@
 package businessLogic;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import domainModel.Builder;
-import domainModel.BuilderFactory;
-import exportLibrary.DocExt;
-import exportLibrary.Utils;
-import formModels.Form;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -13,11 +7,36 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 
 import databaseManagement.CategoryDao;
+import databaseManagement.FormDao;
+import domainModel.BuilderFactory;
+import formModels.CurriculumForm;
+import domainModel.Builder;
+import exportLibrary.DocExt;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 
 public class Controller {
 
     private final BuilderFactory builderFactory;
+    private static final EntityManagerFactory emf;
+
+    /**
+     * Static block for creating EntityManagerFactory. The Persistence class looks for META-INF/persistence.xml in the classpath.
+     */
+    static {
+        emf = Persistence.createEntityManagerFactory("exportlibrary");
+    }
+
+    /**
+     * Static method returning EntityManager.
+     * @return EntityManager
+     */
+    public static EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
 
     public Controller() {
         this.builderFactory = new BuilderFactory();
@@ -33,6 +52,9 @@ public class Controller {
         categories.add("Brochure");
 
         CategoryDao categoryDao = new CategoryDao();
+        FormDao formDao = new FormDao(getEntityManager());
+
+        formDao.saveForm(new CurriculumForm("curriculumWordTemplate", "Curriculum"));
 
         return categoryDao.categories();
     }

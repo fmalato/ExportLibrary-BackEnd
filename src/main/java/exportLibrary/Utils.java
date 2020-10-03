@@ -86,7 +86,8 @@ public class Utils {
      * @return Form a compiled Form corresponding to the given Json String
      */
     public Form mapJsonToObject(JSONArray jArray) {
-        CurriculumForm cf = new CurriculumForm();
+        // Qui dovrebber fare il new a seconda della categoria giusta
+        CurriculumForm cf = new CurriculumForm("tmp", "Curriculum");
         Field[] fields = cf.getClass().getDeclaredFields();
         Iterator jsonArrayItr = jArray.iterator();
 
