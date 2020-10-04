@@ -6,7 +6,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
-import databaseManagement.CategoryDao;
 import databaseManagement.FormDao;
 import domainModel.BuilderFactory;
 import formModels.CurriculumForm;
@@ -20,26 +19,12 @@ import javax.persistence.Persistence;
 
 public class Controller {
 
-    private final BuilderFactory builderFactory;
+    private static final BuilderFactory builderFactory;
     private static final EntityManagerFactory emf;
 
-    /**
-     * Static block for creating EntityManagerFactory. The Persistence class looks for META-INF/persistence.xml in the classpath.
-     */
     static {
+        builderFactory = new BuilderFactory();
         emf = Persistence.createEntityManagerFactory("exportlibrary");
-    }
-
-    /**
-     * Static method returning EntityManager.
-     * @return EntityManager
-     */
-    public static EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-
-    public Controller() {
-        this.builderFactory = new BuilderFactory();
     }
 
     public static JSONArray getDBCategories() {
@@ -51,12 +36,11 @@ public class Controller {
         categories.add("Report");
         categories.add("Brochure");
 
-        CategoryDao categoryDao = new CategoryDao();
         FormDao formDao = new FormDao(getEntityManager());
 
-        formDao.saveForm(new CurriculumForm("curriculumWordTemplate", "Curriculum"));
+        formDao.persist(new CurriculumForm("curriculumWordTemplate3", "Curriculum"));
 
-        return categoryDao.categories();
+        return formDao.getCategories();
     }
 
     public static JSONArray getDBFormCategory(String category) {
@@ -100,6 +84,10 @@ public class Controller {
         } catch(IOException | ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public static EntityManager getEntityManager() {
+        return emf.createEntityManager();
     }
 
 

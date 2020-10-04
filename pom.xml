@@ -111,6 +111,7 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.4.21.Final</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>

@@ -1,24 +1,32 @@
 package databaseManagement;
 
-import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import formModels.Form;
+import org.json.simple.JSONArray;
 
-public class FormDao {
+import java.util.ArrayList;
 
-    private EntityManager entityManager;
+
+public class FormDao extends GenericDao<Form> {
 
     public FormDao(EntityManager entityManager) {
-        this.entityManager = entityManager;
+        super(entityManager);
+        setClass(Form.class);
     }
 
-    public void saveForm(Form form) {
-        System.out.println(entityManager);
+    public JSONArray getCategories() {
+        checkIfInitialized();
         entityManager.getTransaction().begin();
-        entityManager.persist(form);
+        ArrayList<String> resultList = (ArrayList<String>) entityManager.createQuery("select distinct category from Form").getResultList();
         entityManager.getTransaction().commit();
+
+        JSONArray jsonResultList = new JSONArray();
+        for (String result : resultList) {
+            jsonResultList.add(result);
+        }
+
+        return jsonResultList;
     }
 
 }
