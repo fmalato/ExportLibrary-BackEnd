@@ -21,6 +21,10 @@ public abstract class Form {
     @NotNull
     private String category;
 
+    public Form() {
+
+    }
+
     public Form(String name, DocExt documentType, String category) {
         this.name = name;
         this.documentType = documentType;

@@ -22,6 +22,10 @@ public class Controller {
     private static final BuilderFactory builderFactory;
     private static final EntityManagerFactory emf;
 
+    /**
+     * Static block for creating EntityManagerFactory. The Persistence class looks for META-INF/persistence.xml
+     * in the classpath.
+     */
     static {
         builderFactory = new BuilderFactory();
         emf = Persistence.createEntityManagerFactory("exportlibrary");
