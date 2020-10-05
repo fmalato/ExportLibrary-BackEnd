@@ -57,6 +57,13 @@ public class Controller {
         return jsonForm;
     }
 
+    public static JSONArray getDBTemplateNameCategory(String category) {
+
+        FormDao formDao = new FormDao(getEntityManager());
+
+        return  formDao.getTemplatesFromCategory(category);
+    }
+
     public void generateDocument(DocExt ext, String fileName, String templateName) {
         Builder b = this.builderFactory.createBuilder(ext);
         try {

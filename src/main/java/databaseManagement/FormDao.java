@@ -38,8 +38,6 @@ public class FormDao extends GenericDao<Form> {
                 category), Form.class).getResultList();
         entityManager.getTransaction().commit();
 
-        System.out.println(formList);
-
         Form form = null;
         try {
             form = formList.get(0);
@@ -48,4 +46,18 @@ public class FormDao extends GenericDao<Form> {
         return form;
     }
 
+    public JSONArray getTemplatesFromCategory(String category) {
+        checkIfInitialized();
+        entityManager.getTransaction().begin();
+        ArrayList<String> resultList = (ArrayList<String>) entityManager.createQuery(String.format("select distinct name from Form where category = '%s'",
+                category)).getResultList();
+        entityManager.getTransaction().commit();
+
+        JSONArray jsonResultList = new JSONArray();
+        for (String result : resultList) {
+            jsonResultList.add(result);
+        }
+
+        return jsonResultList;
+    }
 }
