@@ -1,7 +1,6 @@
 package formModels;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.sql.Date;
 
 import exportLibrary.DocExt;
@@ -21,6 +20,8 @@ public class CurriculumForm extends Form {
         this.dateofBirth = null;
         this.address = null;
     }
+
+    public CurriculumForm() { }
 
     public String getFirstname() {
         return firstname;
