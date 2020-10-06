@@ -1,5 +1,6 @@
 package businessLogic;
 
+import formModels.Form;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -42,43 +43,25 @@ public class Controller {
 
         FormDao formDao = new FormDao(getEntityManager());
 
-        formDao.persist(new CurriculumForm("curriculumWordTemplate3", "Curriculum"));
+        // formDao.persist(new CurriculumForm("curriculumWordTemplate3", "Curriculum"));
 
         return formDao.getCategories();
     }
 
     public static JSONArray getDBFormCategory(String category) {
-        // Dao con category genera il form adatto
-        JSONArray form = new JSONArray();
-        JSONObject tmp = new JSONObject();
 
-        tmp.put("type", "textBox");
-        tmp.put("label", "firstname");
-        tmp.put("value", "null");
-        form.add(tmp);
+        FormDao formDao = new FormDao(getEntityManager());
+        Form form = formDao.getFormFromCategory(category);
+        JSONArray jsonForm = JsonMapper.toJson(form);
 
-        tmp = new JSONObject();
-        tmp.put("type", "textBox");
-        tmp.put("label", "lastname");
-        tmp.put("value", "null");
-        form.add(tmp);
+        return jsonForm;
+    }
 
-        tmp = new JSONObject();
-        tmp.put("type", "date");
-        tmp.put("label", "dateofBirth");
-        tmp.put("value", "null");
-        form.add(tmp);
+    public static JSONArray getDBTemplateNameCategory(String category) {
 
-        tmp = new JSONObject();
-        tmp.put("type", "textBox");
-        tmp.put("label", "address");
-        tmp.put("value", "null");
-        form.add(tmp);
+        FormDao formDao = new FormDao(getEntityManager());
 
-        System.out.println(category);
-        System.out.println(form);
-
-        return form;
+        return  formDao.getTemplatesFromCategory(category);
     }
 
     public static void generateDocument(DocExt ext, String fileName, String templateName) {

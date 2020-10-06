@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-@Path("/exportendpoint")
+@Path("/")
 public class RestEndPoint {
 
     @GET
@@ -24,7 +24,7 @@ public class RestEndPoint {
             .build(); }
 
     @GET
-    @Path("/{category}")
+    @Path("/form/{category}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFormCategory(@PathParam("category") String category) { return Response
             .status(Response.Status.OK)
@@ -33,6 +33,15 @@ public class RestEndPoint {
             .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
             .entity(Controller.getDBFormCategory(category))
             .build(); }
+
+    @GET
+    @Path("/templates/{category}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTemplateNameCategory(@PathParam("category") String category) { return Response
+            .status(Response.Status.OK)
+            .entity(Controller.getDBTemplateNameCategory(category))
+            .build(); }
+
 
     /*@POST
     @Produces(MediaType.APPLICATION_JSON)
