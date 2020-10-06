@@ -81,8 +81,8 @@ public class Controller {
         return form;
     }
 
-    public void generateDocument(DocExt ext, String fileName, String templateName) {
-        Builder b = this.builderFactory.createBuilder(ext);
+    public static void generateDocument(DocExt ext, String fileName, String templateName) {
+        Builder b = builderFactory.createBuilder(ext);
         try {
             b.generateDoc(fileName, templateName);
         } catch(IOException | ParseException e) {
