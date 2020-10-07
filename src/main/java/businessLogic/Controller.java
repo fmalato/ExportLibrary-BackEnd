@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.IOException;
 
 import databaseManagement.FormDao;
@@ -64,13 +65,14 @@ public class Controller {
         return  formDao.getTemplatesFromCategory(category);
     }
 
-    public static void generateDocument(DocExt ext, String fileName, String templateName) {
+    public static File generateDocument(DocExt ext, JSONArray fields, String templateName) {
         Builder b = builderFactory.createBuilder(ext);
         try {
-            b.generateDoc(fileName, templateName);
+            return b.generateDoc(fields, templateName);
         } catch(IOException | ParseException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public static EntityManager getEntityManager() {

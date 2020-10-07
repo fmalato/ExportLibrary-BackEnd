@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -37,16 +38,14 @@ public class DocxBuilder implements Builder {
      * @param templateName name of the template to read from the "templates" folder
      */
     @Override
-    public void generateDoc(String jsonName, String templateName) throws IOException, ParseException {
+    public File generateDoc(JSONArray fields, String templateName) throws IOException, ParseException {
 
-        JSONParser jParser = new JSONParser();
-        JSONArray fields = (JSONArray)jParser.parse(new FileReader(jsonName));
         try {
-            Form f = util.mapJsonToObject(fields);
-            util.insertFields(f, templateName, util.getFileExtension(templateName), this.outExt);
+            return util.insertFields(fields, templateName, util.getFileExtension(templateName), this.outExt);
         } catch(NullPointerException e) {
             e.printStackTrace();
         }
+        return null;
 
     }
 

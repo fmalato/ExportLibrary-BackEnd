@@ -29,33 +29,34 @@ public class Utils {
      * @param fieldValues A Form containing the template fields values
      * @param docName the name of the template
      * @param inExt the input extension of the file
-     * @param outExt the desired extension of the output file
+     * @param outExt A DocExt containing the output file extension
      */
-    public void insertFields(Form fieldValues, String docName, DocExt inExt, DocExt outExt) {
+    public File insertFields(JSONArray fieldValues, String docName, DocExt inExt, DocExt outExt) {
 
         if(Arrays.asList(this.supportedExts).contains(inExt)) {
             try {
-                InputStream in = new BufferedInputStream(new FileInputStream(docName));
+                InputStream in = new BufferedInputStream(new FileInputStream("templates/" + docName));
                 IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in, TemplateEngineKind.Velocity);
-                Field[] fields = fieldValues.getClass().getDeclaredFields();
                 IContext context = report.createContext();
-                for(Field f : fields) {
-                    context.put(f.getName(), f.get(fields));
+                for (Object fieldValue : fieldValues) {
+                    JSONObject currentObj = (JSONObject) fieldValue;
+                    context.put(currentObj.get("label").toString(), currentObj.get("value"));
                 }
-                String[] list = {"un", "due", "tre", "stella!"};
-                context.put("entries", list);
 
-                OutputStream out = new FileOutputStream(new File("outFileXDoc.docx"));
+                File outFile = new File(docName);
+                OutputStream out = new FileOutputStream(outFile);
                 report.process(context, out);
 
-            } catch (IOException | XDocReportException | IllegalAccessException e) {
+                return outFile;
+
+            } catch (IOException | XDocReportException e) {
                 e.printStackTrace();
             }
         }
         else {
             // This should throw something like "FileNotSupportedException"
         }
-
+        return null;
     }
 
     /**
@@ -63,7 +64,7 @@ public class Utils {
      * @param fileName the name of the file
      * @return DocExt the extension as an enumeration
      */
-    public DocExt getFileExtension(String fileName) {
+    public static DocExt getFileExtension(String fileName) {
 
         String extension = "";
         int index = fileName.lastIndexOf('.');
