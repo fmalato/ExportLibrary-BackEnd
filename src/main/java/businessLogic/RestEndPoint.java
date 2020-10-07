@@ -39,18 +39,21 @@ public class RestEndPoint {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTemplateNameCategory(@PathParam("category") String category) { return Response
             .status(Response.Status.OK)
+            .header("Access-Control-Allow-Origin", "*")
             .entity(Controller.getDBTemplateNameCategory(category))
             .build(); }
 
 
-    /*@POST
+    /*
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response generateDoc(DocExt ext, String fileName, String templateName) { return Response
             .status(Response.Status.OK)
             .entity(Controller.generateDocument(ext, fileName, templateName))
             .buid(); }
     }
-    @Consumes*/
+    @Consumes
+    */
 
 }
 
