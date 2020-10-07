@@ -24,23 +24,13 @@ public class Controller {
     private static final BuilderFactory builderFactory;
     private static final EntityManagerFactory emf;
 
-    /**
-     * Static block for creating EntityManagerFactory. The Persistence class looks for META-INF/persistence.xml
-     * in the classpath.
-     */
+
     static {
         builderFactory = new BuilderFactory();
         emf = Persistence.createEntityManagerFactory("exportlibrary");
     }
 
     public static JSONArray getDBCategories() {
-        // Chiamo il Dao che fa la query sulle categorie e me le restituisce
-        JSONArray categories = new JSONArray();
-
-        categories.add("Curriculum");
-        categories.add("Graphs");
-        categories.add("Report");
-        categories.add("Brochure");
 
         FormDao formDao = new FormDao(getEntityManager());
 
