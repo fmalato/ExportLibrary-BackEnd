@@ -18,6 +18,8 @@ public class CurriculumForm extends Form {
         form.add(JsonMapper.createField("lastname", "text"));
         form.add(JsonMapper.createField("dateofBirth", "date"));
         form.add(JsonMapper.createField("address", "text"));
+        form.add(JsonMapper.createField("phone", "number"));
+        form.add(JsonMapper.createField("mail", "text"));
         form.add(JsonMapper.createField("list", "list"));
         form.add(JsonMapper.createField("image", "image"));
 
