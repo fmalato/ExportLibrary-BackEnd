@@ -1,11 +1,9 @@
 package businessLogic;
 
-import exportLibrary.DocExt;
 import exportLibrary.Utils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -49,16 +47,16 @@ public class RestEndPoint {
 
 
     @POST
-    @Path("/form/{category}")
+    //@Path("/form/{category}/export")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response generateDoc(@PathParam("category") String category, JSONObject jObj) {
+    public Response generateDoc(JSONObject jObj) {
         Response.ResponseBuilder rb = Response.ok(Controller.generateDocument(
-                                                    Utils.getFileExtension(jObj.get("name").toString()),
-                                                    (JSONArray)jObj.get("form"),
-                                                    category
+                                                    Utils.getFileExtension(jObj.get("metadata").toString()),
+                                                    (JSONArray)jObj.get("data"),
+                                                    jObj.get("name").toString()
                                                     ));
-        rb.header("Access-Control-Allow-Origin", "*");
+        rb.header("Access-Control-Allow-Origin", "http://localhost:4200");
         rb.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");
         rb.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
         return rb.build();
