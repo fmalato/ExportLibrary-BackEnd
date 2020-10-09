@@ -1,58 +1,33 @@
 package formModels;
 
-import javax.persistence.Entity;
-import java.sql.Date;
+import businessLogic.JsonMapper;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import exportLibrary.DocExt;
+import javax.persistence.Entity;
+
 
 @Entity
 public class CurriculumForm extends Form {
 
-    private String firstname;
-    private String lastname;
-    private Date dateofBirth;
-    private String address;
-
     public CurriculumForm(String name, String category) {
-        super(name, DocExt.DOCX, category);
-        this.firstname = null;
-        this.lastname = null;
-        this.dateofBirth = null;
-        this.address = null;
+        super(name, category);
+
+        JSONArray form = new JSONArray();
+        form.add(JsonMapper.createField("firstname", "text"));
+        form.add(JsonMapper.createField("lastname", "text"));
+        form.add(JsonMapper.createField("dateofBirth", "date"));
+        form.add(JsonMapper.createField("address", "text"));
+        form.add(JsonMapper.createField("phone", "number"));
+        form.add(JsonMapper.createField("mail", "text"));
+        form.add(JsonMapper.createField("list", "list"));
+        form.add(JsonMapper.createField("image", "image"));
+
+        this.fields = form.toJSONString();
     }
 
-    public CurriculumForm() { }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public Date getDateofBirth() {
-        return dateofBirth;
-    }
-
-    public void setDateofBirth(Date dateofBirth) {
-        this.dateofBirth = dateofBirth;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public CurriculumForm() {
+        super();
     }
 
 }

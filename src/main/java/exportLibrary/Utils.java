@@ -2,11 +2,13 @@ package exportLibrary;
 
 import formModels.CurriculumForm;
 import formModels.Form;
+
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.document.IXDocReport;
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
 import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 

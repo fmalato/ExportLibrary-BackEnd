@@ -34,7 +34,7 @@ public class Controller {
 
         FormDao formDao = new FormDao(getEntityManager());
 
-        // formDao.persist(new CurriculumForm("curriculumWordTemplate3", "Curriculum"));
+        // mDao.persist(new CurriculumForm("CurriculumEuropeo.docx", "Curriculum"));
 
         return formDao.getCategories();
     }

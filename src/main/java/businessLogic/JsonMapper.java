@@ -1,7 +1,5 @@
 package businessLogic;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import formModels.Form;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,30 +12,27 @@ public class JsonMapper {
 
         JSONArray jsonForm = new JSONArray();
 
-        ObjectMapper mapper = new ObjectMapper();
         try {
-            String jsonString = mapper.writeValueAsString(form);
+            System.out.println(form.getFields());
+            String jsonString = form.getFields();
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(jsonString);
+            jsonForm = (JSONArray) parser.parse(jsonString);
+            System.out.println(jsonForm);
 
-            jsonObject.remove("id");
-            jsonObject.remove("name");
-            jsonObject.remove("category");
-
-            JSONObject jsonTmp = null;
-            for (Object key : jsonObject.keySet()) {
-                jsonTmp = new JSONObject();
-                jsonTmp.put("type", "text");
-                jsonTmp.put("label", key);
-                jsonTmp.put("value", null);
-                jsonForm.add(jsonTmp);
-            }
-
-        } catch (JsonProcessingException | ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
         return jsonForm;
+    }
+
+    public static JSONObject createField(String label, String type) {
+        JSONObject field = new JSONObject();
+        field.put("label", label);
+        field.put("type", type);
+        field.put("value", null);
+
+        return field;
     }
 
 }
