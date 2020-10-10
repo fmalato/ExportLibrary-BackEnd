@@ -1,6 +1,7 @@
 package businessLogic;
 
 import formModels.Form;
+import formModels.SickNoteForm;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -34,7 +35,7 @@ public class Controller {
 
         FormDao formDao = new FormDao(getEntityManager());
 
-        // mDao.persist(new CurriculumForm("CurriculumEuropeo.docx", "Curriculum"));
+        formDao.persist(new SickNoteForm("CertificatoMalattia.docx", "Certificato di Malattia"));
 
         return formDao.getCategories();
     }
