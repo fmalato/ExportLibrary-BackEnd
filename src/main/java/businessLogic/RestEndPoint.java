@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 
 
 @Path("/")
@@ -53,8 +54,8 @@ public class RestEndPoint {
     public Response generateDoc(JSONObject jObj) {
         Response.ResponseBuilder rb = Response.ok(Controller.generateDocument(
                                                     Utils.getFileExtension(jObj.get("metadata").toString()),
-                                                    (JSONArray)jObj.get("data"),
-                                                    jObj.get("name").toString()
+                                                    (ArrayList)jObj.get("data"),
+                                                    jObj.get("metadata").toString()
                                                     ));
         rb.header("Access-Control-Allow-Origin", "http://localhost:4200");
         rb.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");

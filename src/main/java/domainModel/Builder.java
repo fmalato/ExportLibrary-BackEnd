@@ -6,10 +6,11 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public interface Builder {
 
-    default File generateDoc(JSONArray jArray, String templateName) throws IOException, ParseException {
+    default File generateDoc(ArrayList jArray, String templateName) throws IOException, ParseException {
         return null;
     }
 

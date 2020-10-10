@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import databaseManagement.FormDao;
 import domainModel.BuilderFactory;
@@ -35,7 +36,7 @@ public class Controller {
 
         FormDao formDao = new FormDao(getEntityManager());
 
-        formDao.persist(new SickNoteForm("CertificatoMalattia.docx", "Certificato di Malattia"));
+         // formDao.persist(new SickNoteForm("CertificatoMalattia.docx", "Certificato di Malattia"));
 
         return formDao.getCategories();
     }
@@ -56,7 +57,7 @@ public class Controller {
         return  formDao.getTemplatesFromCategory(category);
     }
 
-    public static File generateDocument(DocExt ext, JSONArray fields, String templateName) {
+    public static File generateDocument(DocExt ext, ArrayList fields, String templateName) {
         Builder b = builderFactory.createBuilder(ext);
         try {
             return b.generateDoc(fields, templateName);

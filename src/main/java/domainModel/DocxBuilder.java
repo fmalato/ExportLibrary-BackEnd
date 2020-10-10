@@ -11,6 +11,7 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class DocxBuilder implements Builder {
@@ -38,7 +39,7 @@ public class DocxBuilder implements Builder {
      * @param templateName name of the template to read from the "templates" folder
      */
     @Override
-    public File generateDoc(JSONArray fields, String templateName) throws IOException, ParseException {
+    public File generateDoc(ArrayList fields, String templateName) throws IOException, ParseException {
 
         try {
             return util.insertFields(fields, templateName, util.getFileExtension(templateName), this.outExt);

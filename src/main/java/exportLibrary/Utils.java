@@ -14,8 +14,10 @@ import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 
 public class Utils {
@@ -33,19 +35,19 @@ public class Utils {
      * @param inExt the input extension of the file
      * @param outExt A DocExt containing the output file extension
      */
-    public File insertFields(JSONArray fieldValues, String docName, DocExt inExt, DocExt outExt) {
+    public File insertFields(ArrayList fieldValues, String docName, DocExt inExt, DocExt outExt) {
 
         if(Arrays.asList(this.supportedExts).contains(inExt)) {
             try {
-                InputStream in = new BufferedInputStream(new FileInputStream("templates/" + docName));
+                InputStream in = new BufferedInputStream(new FileInputStream("/Users/federico/IdeaProjects/ExportLibrary-BackEnd/templates/" + docName));
                 IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in, TemplateEngineKind.Velocity);
                 IContext context = report.createContext();
                 for (Object fieldValue : fieldValues) {
-                    JSONObject currentObj = (JSONObject) fieldValue;
-                    context.put(currentObj.get("label").toString(), currentObj.get("value"));
+                    //JSONObject currentObj = (JSONObject) fieldValue;
+                    context.put(((LinkedHashMap)fieldValue).get("label").toString(), ((LinkedHashMap)fieldValue).get("value").toString());
                 }
 
-                File outFile = new File(docName);
+                File outFile = new File("/Users/federico/IdeaProjects/ExportLibrary-BackEnd/out_" + docName );
                 OutputStream out = new FileOutputStream(outFile);
                 report.process(context, out);
 
