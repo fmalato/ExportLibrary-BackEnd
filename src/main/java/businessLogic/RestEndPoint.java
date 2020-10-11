@@ -48,7 +48,7 @@ public class RestEndPoint {
 
 
     @POST
-    //@Path("/form/{category}/export")
+    @Path("/form/{category}/export")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response generateDoc(JSONObject jObj) {
@@ -57,7 +57,7 @@ public class RestEndPoint {
                                                     (ArrayList)jObj.get("data"),
                                                     jObj.get("metadata").toString()
                                                     ));
-        rb.header("Access-Control-Allow-Origin", "http://localhost:4200");
+        rb.header("Access-Control-Allow-Origin", "http://localhost:4200/#/form-template");
         rb.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");
         rb.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
         return rb.build();

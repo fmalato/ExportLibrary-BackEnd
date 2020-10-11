@@ -14,10 +14,7 @@ import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 
 public class Utils {
@@ -39,15 +36,33 @@ public class Utils {
 
         if(Arrays.asList(this.supportedExts).contains(inExt)) {
             try {
-                InputStream in = new BufferedInputStream(new FileInputStream("/Users/federico/IdeaProjects/ExportLibrary-BackEnd/templates/" + docName));
+                InputStream in = new BufferedInputStream(new FileInputStream("/Users/francescogradi/Desktop/ExportLibrary-BackEnd/templates/" + docName));
+                System.out.println(in);
                 IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in, TemplateEngineKind.Velocity);
                 IContext context = report.createContext();
+
+                System.out.println(fieldValues);
+
+                String key = "";
+                String value = "";
+
                 for (Object fieldValue : fieldValues) {
-                    //JSONObject currentObj = (JSONObject) fieldValue;
-                    context.put(((LinkedHashMap)fieldValue).get("label").toString(), ((LinkedHashMap)fieldValue).get("value").toString());
+
+                    key = ((LinkedHashMap)fieldValue).get("label").toString();
+                    if (!key.equals("list") && !key.equals("image")) {
+                        value = ((LinkedHashMap)fieldValue).get("value").toString();
+                        context.put(key, value);
+
+                    } else if (key.equals("list")) {
+                        List<String> list = new ArrayList<String>();
+                        for (Object item : (ArrayList)((LinkedHashMap)fieldValue).get("value")) {
+                            list.add(((LinkedHashMap)item).get("item").toString());
+                        }
+                        context.put(key, list);
+                    }
                 }
 
-                File outFile = new File("/Users/federico/IdeaProjects/ExportLibrary-BackEnd/out_" + docName );
+                File outFile = new File("/Users/francescogradi/Desktop/ExportLibrary-BackEnd/templates/out_" + docName );
                 OutputStream out = new FileOutputStream(outFile);
                 report.process(context, out);
 
