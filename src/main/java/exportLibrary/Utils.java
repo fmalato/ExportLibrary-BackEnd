@@ -15,6 +15,9 @@ import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -23,6 +26,7 @@ import java.util.*;
 public class Utils {
 
     private final DocExt[] supportedExts;
+    private final String absolutePath = "/Users/francescogradi/Desktop/ExportLibrary-BackEnd/templates/";
 
     public Utils() {
         this.supportedExts = DocExt.values();
@@ -39,7 +43,7 @@ public class Utils {
 
         if(Arrays.asList(this.supportedExts).contains(inExt)) {
             try {
-                InputStream in = new BufferedInputStream(new FileInputStream("/Users/francescogradi/Desktop/ExportLibrary-BackEnd/templates/" + docName));
+                InputStream in = new BufferedInputStream(new FileInputStream( absolutePath + docName));
                 IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in, TemplateEngineKind.Velocity);
                 IContext context = report.createContext();
 
@@ -64,10 +68,31 @@ public class Utils {
                         }
                         context.put(key, list);
 
+                    } else if (key.equals("image")) {
+
+                        String base64Image = "";
+                        try {
+                            base64Image = ((LinkedHashMap)fieldValue).get("value").toString().split(",")[1];
+                        } catch (Exception e) {
+                            continue;
+                        }
+
+                        FieldsMetadata metadata = new FieldsMetadata();
+                        metadata.addFieldAsImage("image");
+                        report.setFieldsMetadata(metadata);
+                        File fileImage = new File(absolutePath + "tmp.jpg");
+
+                        byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+                        BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
+                        ImageIO.write(img, "jpg", fileImage);
+
+                        IImageProvider image = new FileImageProvider(fileImage);
+                        image.setResize( true );
+                        context.put("image", image);
                     }
                 }
 
-                File outFile = new File("/Users/francescogradi/Desktop/ExportLibrary-BackEnd/templates/out_" + docName );
+                File outFile = new File(absolutePath + "out_" + docName );
                 OutputStream out = new FileOutputStream(outFile);
                 report.process(context, out);
 
