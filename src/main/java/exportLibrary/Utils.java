@@ -5,10 +5,13 @@ import formModels.Form;
 
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.document.IXDocReport;
+import fr.opensagres.xdocreport.document.images.FileImageProvider;
+import fr.opensagres.xdocreport.document.images.IImageProvider;
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
 import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
 
+import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -37,11 +40,8 @@ public class Utils {
         if(Arrays.asList(this.supportedExts).contains(inExt)) {
             try {
                 InputStream in = new BufferedInputStream(new FileInputStream("/Users/francescogradi/Desktop/ExportLibrary-BackEnd/templates/" + docName));
-                System.out.println(in);
                 IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in, TemplateEngineKind.Velocity);
                 IContext context = report.createContext();
-
-                System.out.println(fieldValues);
 
                 String key = "";
                 String value = "";
@@ -50,8 +50,12 @@ public class Utils {
 
                     key = ((LinkedHashMap)fieldValue).get("label").toString();
                     if (!key.equals("list") && !key.equals("image")) {
-                        value = ((LinkedHashMap)fieldValue).get("value").toString();
-                        context.put(key, value);
+                        try {
+                            value = ((LinkedHashMap)fieldValue).get("value").toString();
+                            context.put(key, value);
+                        } catch(Exception e) {
+                            continue;
+                        }
 
                     } else if (key.equals("list")) {
                         List<String> list = new ArrayList<String>();
@@ -59,6 +63,7 @@ public class Utils {
                             list.add(((LinkedHashMap)item).get("item").toString());
                         }
                         context.put(key, list);
+
                     }
                 }
 

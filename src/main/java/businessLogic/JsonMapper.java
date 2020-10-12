@@ -17,7 +17,6 @@ public class JsonMapper {
             String jsonString = form.getFields();
             JSONParser parser = new JSONParser();
             jsonForm = (JSONArray) parser.parse(jsonString);
-            System.out.println(jsonForm);
 
         } catch (ParseException e) {
             e.printStackTrace();
