@@ -20,7 +20,6 @@ public abstract class Form {
     protected String fields;
 
 
-
     public Form(String name, String category) {
         this.name = name;
         this.category = category;

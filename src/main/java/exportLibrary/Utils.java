@@ -57,7 +57,7 @@ public class Utils {
                         try {
                             value = ((LinkedHashMap)fieldValue).get("value").toString();
                             context.put(key, value);
-                        } catch(Exception e) {
+                        } catch (Exception e) {
                             continue;
                         }
 
