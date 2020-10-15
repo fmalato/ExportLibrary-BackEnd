@@ -37,7 +37,7 @@ public class Controller {
 
         FormDao formDao = new FormDao(getEntityManager());
 
-        // formDao.persist(new HospitalSalaryForm("GestioneSalariOspedale.docx", "Salari Ospedale"));
+        // formDao.persist(new HospitalSalaryForm("GestioneSalariOspedale.xlsx", "Salari Ospedale"));
 
         return formDao.getCategories();
     }
