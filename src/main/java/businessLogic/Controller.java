@@ -1,6 +1,7 @@
 package businessLogic;
 
 import formModels.Form;
+import formModels.HospitalSalaryForm;
 import formModels.SickNoteForm;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -36,7 +37,7 @@ public class Controller {
 
         FormDao formDao = new FormDao(getEntityManager());
 
-         // formDao.persist(new SickNoteForm("CertificatoMalattia.docx", "Certificato di Malattia"));
+        // formDao.persist(new HospitalSalaryForm("GestioneSalariOspedale.xlsx", "Salari Ospedale"));
 
         return formDao.getCategories();
     }
@@ -45,15 +46,13 @@ public class Controller {
 
         FormDao formDao = new FormDao(getEntityManager());
         Form form = formDao.getFormFromCategory(category);
-        JSONArray jsonForm = JsonMapper.toJson(form);
 
-        return jsonForm;
+        return JsonMapper.toJson(form);
     }
 
     public static JSONArray getDBTemplateNameCategory(String category) {
 
         FormDao formDao = new FormDao(getEntityManager());
-
         return  formDao.getTemplatesFromCategory(category);
     }
 

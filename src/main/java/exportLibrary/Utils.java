@@ -3,6 +3,7 @@ package exportLibrary;
 import formModels.CurriculumForm;
 import formModels.Form;
 
+import formModels.HospitalEmployee;
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.document.IXDocReport;
 import fr.opensagres.xdocreport.document.images.FileImageProvider;
@@ -15,6 +16,8 @@ import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.jxls.common.Context;
+import org.jxls.util.JxlsHelper;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -58,7 +61,7 @@ public class Utils {
                         try {
                             value = ((LinkedHashMap)fieldValue).get("value").toString();
                             context.put(key, value);
-                        } catch(Exception e) {
+                        } catch (Exception e) {
                             continue;
                         }
 
@@ -164,4 +167,26 @@ public class Utils {
         return cf;
     }
 
+    public File insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt) {
+
+        try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + docName));) {
+            Context context = new Context();
+            context.putVar("employees", employees);
+
+            File outFile = new File(absolutePath + "out_" + docName );
+            OutputStream os = new FileOutputStream(outFile);
+
+            JxlsHelper.getInstance().processTemplate(is, os, context);
+
+            return outFile;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
 }
