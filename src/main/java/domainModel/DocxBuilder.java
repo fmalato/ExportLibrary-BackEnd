@@ -35,11 +35,11 @@ public class DocxBuilder implements Builder {
      * This it the actual method for building the document. The hard work is completed
      * inside the Utils class. Here, given a .json file (later will be a String), it is
      * parsed in order to extract the fields that have to be replaced.
-     * @param jsonName a Json file containing the words to replace in the template
+     * @param fields aa ArrayList containing the words to replace in the template
      * @param templateName name of the template to read from the "templates" folder
      */
     @Override
-    public File generateDoc(ArrayList fields, String templateName) throws IOException, ParseException {
+    public byte[] generateDoc(ArrayList fields, String templateName) throws IOException, ParseException {
 
         try {
             return util.insertFields(fields, templateName, util.getFileExtension(templateName), this.outExt);

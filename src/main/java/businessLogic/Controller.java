@@ -57,7 +57,7 @@ public class Controller {
         return  formDao.getTemplatesFromCategory(category);
     }
 
-    public static File generateDocument(DocExt ext, ArrayList fields, String templateName) {
+    public static byte[] generateDocument(DocExt ext, ArrayList fields, String templateName) {
         Builder b = builderFactory.createBuilder(ext);
         try {
             return b.generateDoc(fields, templateName);

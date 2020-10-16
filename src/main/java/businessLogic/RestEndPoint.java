@@ -1,13 +1,20 @@
 package businessLogic;
 
 import exportLibrary.Utils;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 @Path("/")
@@ -50,19 +57,20 @@ public class RestEndPoint {
     @POST
     @Path("/form/{category}/export")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response generateDoc(JSONObject jObj) {
-        Response.ResponseBuilder rb = Response.ok(Controller.generateDocument(
-                                                    Utils.getFileExtension(jObj.get("metadata").toString()),
-                                                    (ArrayList)jObj.get("data"),
-                                                    jObj.get("metadata").toString()
-                                                    ));
-        rb.header("Access-Control-Allow-Origin", "http://localhost:4200/#/form-template");
+        byte[] entity = Controller.generateDocument(
+                            Utils.getFileExtension(jObj.get("metadata").toString()),
+                            (ArrayList)jObj.get("data"),
+                            jObj.get("metadata").toString());
+        HashMap<String, String> hm = new HashMap<>();
+        hm.put("response", new String(entity));
+        JSONObject jObjResponse = new JSONObject(hm);
+        Response.ResponseBuilder rb = Response.ok(jObjResponse, MediaType.APPLICATION_JSON);
+        rb.header("Access-Control-Allow-Origin", "*");
         rb.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");
         rb.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
         return rb.build();
     }
-
 
 }
 

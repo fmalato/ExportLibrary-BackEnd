@@ -6,7 +6,7 @@ public class XlsxBuilder implements Builder {
 
     public XlsxBuilder() {}
 
-    public File generateDoc() {
+    public byte[] generateDoc() {
         return null;
     }
 

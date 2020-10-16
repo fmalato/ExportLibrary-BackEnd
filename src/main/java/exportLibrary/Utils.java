@@ -12,6 +12,7 @@ import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
 
 import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -26,7 +27,7 @@ import java.util.*;
 public class Utils {
 
     private final DocExt[] supportedExts;
-    private final String absolutePath = "/Users/francescogradi/Desktop/ExportLibrary-BackEnd/templates/";
+    private final String absolutePath = "/Users/federico/IdeaProjects/ExportLibrary-BackEnd/";
 
     public Utils() {
         this.supportedExts = DocExt.values();
@@ -39,11 +40,11 @@ public class Utils {
      * @param inExt the input extension of the file
      * @param outExt A DocExt containing the output file extension
      */
-    public File insertFields(ArrayList fieldValues, String docName, DocExt inExt, DocExt outExt) {
+    public byte[] insertFields(ArrayList fieldValues, String docName, DocExt inExt, DocExt outExt) {
 
         if(Arrays.asList(this.supportedExts).contains(inExt)) {
             try {
-                InputStream in = new BufferedInputStream(new FileInputStream( absolutePath + docName));
+                InputStream in = new BufferedInputStream(new FileInputStream( absolutePath + "templates/" + docName));
                 IXDocReport report = XDocReportRegistry.getRegistry().loadReport(in, TemplateEngineKind.Velocity);
                 IContext context = report.createContext();
 
@@ -92,11 +93,14 @@ public class Utils {
                     }
                 }
 
-                File outFile = new File(absolutePath + "out_" + docName );
+                //File outFile = new File(absolutePath + "out_" + docName );
+                File dataDir = new File(System.getProperty("jboss.server.data.dir"));
+                File outFile = new File(dataDir, "out_" + docName);
                 OutputStream out = new FileOutputStream(outFile);
                 report.process(context, out);
 
-                return outFile;
+
+                return FileUtils.readFileToByteArray(outFile);
 
             } catch (IOException | XDocReportException e) {
                 e.printStackTrace();

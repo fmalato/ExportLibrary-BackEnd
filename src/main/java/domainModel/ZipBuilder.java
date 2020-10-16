@@ -6,7 +6,7 @@ public class ZipBuilder implements Builder {
 
     public ZipBuilder() {}
 
-    public File generateDoc() {
+    public byte[] generateDoc() {
         return null;
     }
 
