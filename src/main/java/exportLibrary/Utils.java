@@ -30,7 +30,7 @@ import java.util.*;
 public class Utils {
 
     private final DocExt[] supportedExts;
-    private final String absolutePath = "/Users/federico/IdeaProjects/ExportLibrary-BackEnd/";
+    private final String absolutePath = "/Users/francescogradi/Desktop/ExportLibrary-BackEnd/";
 
     public Utils() {
         this.supportedExts = DocExt.values();
@@ -167,7 +167,7 @@ public class Utils {
         return cf;
     }
 
-    public File insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt) {
+    public byte[] insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt) {
 
         try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + docName));) {
             Context context = new Context();
@@ -178,10 +178,8 @@ public class Utils {
 
             JxlsHelper.getInstance().processTemplate(is, os, context);
 
-            return outFile;
+            return FileUtils.readFileToByteArray(outFile);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

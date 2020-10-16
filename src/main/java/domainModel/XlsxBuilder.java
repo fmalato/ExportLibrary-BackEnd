@@ -23,7 +23,7 @@ public class XlsxBuilder implements Builder {
     }
 
     @Override
-    public File generateDoc(ArrayList fields, String templateName) throws IOException, ParseException {
+    public byte[] generateDoc(ArrayList fields, String templateName) throws IOException, ParseException {
 
         System.out.println(fields);
         System.out.println(templateName);
