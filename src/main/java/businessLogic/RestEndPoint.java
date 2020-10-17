@@ -2,6 +2,7 @@ package businessLogic;
 
 import exportLibrary.Utils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -9,10 +10,10 @@ import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -62,9 +63,9 @@ public class RestEndPoint {
                             Utils.getFileExtension(jObj.get("metadata").toString()),
                             (ArrayList)jObj.get("data"),
                             jObj.get("metadata").toString());
-        HashMap<String, String> hm = new HashMap<>();
-        hm.put("response", new String(entity));
-        JSONObject jObjResponse = new JSONObject(hm);
+        JSONObject jObjResponse = new JSONObject();
+        jObjResponse.put("response", entity);
+
         Response.ResponseBuilder rb = Response.ok(jObjResponse, MediaType.APPLICATION_JSON);
         rb.header("Access-Control-Allow-Origin", "*");
         rb.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");

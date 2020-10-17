@@ -25,16 +25,16 @@ public class XlsxBuilder implements Builder {
     @Override
     public byte[] generateDoc(ArrayList fields, String templateName) throws IOException, ParseException {
 
-        System.out.println(fields);
-        System.out.println(templateName);
         List<HospitalEmployee> employees = new ArrayList<>();
 
         for (Object element : fields) {
-            employees.add(new HospitalEmployee(((LinkedHashMap)element).get("firstname").toString(),
-                    ((LinkedHashMap)element).get("lastname").toString(),
-                    ((LinkedHashMap)element).get("job").toString(),
-                    (int)((LinkedHashMap)element).get("salary"),
-                    (int)((LinkedHashMap)element).get("extraHours")));
+            try {
+                employees.add(new HospitalEmployee(((LinkedHashMap) element).get("firstname").toString(),
+                        ((LinkedHashMap) element).get("lastname").toString(),
+                        ((LinkedHashMap) element).get("job").toString(),
+                        (int) ((LinkedHashMap) element).get("salary"),
+                        (int) ((LinkedHashMap) element).get("extraHours")));
+            } catch (Exception e) { continue; }
         }
 
         return util.insertTableFields(employees, templateName, Utils.getFileExtension(templateName), this.outExt);

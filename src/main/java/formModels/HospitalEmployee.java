@@ -15,6 +15,14 @@ public class HospitalEmployee {
         this.extraHours = extraHours;
     }
 
+    public HospitalEmployee() {
+        this.firstname = "";
+        this.lastname = "";
+        this.job = "";
+        this.salary = 0;
+        this.extraHours = 0;
+    }
+
     public String getFirstname() {
         return firstname;
     }

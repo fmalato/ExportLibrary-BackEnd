@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
 import java.util.*;
 
 
@@ -96,14 +97,13 @@ public class Utils {
                     }
                 }
 
-                //File outFile = new File(absolutePath + "out_" + docName );
-                File dataDir = new File(System.getProperty("jboss.server.data.dir"));
-                File outFile = new File(dataDir, "out_" + docName);
+                File outFile = new File(absolutePath + "templates/out_" + docName );
+                // File dataDir = new File(System.getProperty("jboss.server.data.dir"));
+                // File outFile = new File(dataDir, "out_" + docName);
                 OutputStream out = new FileOutputStream(outFile);
                 report.process(context, out);
 
-
-                return FileUtils.readFileToByteArray(outFile);
+                return Files.readAllBytes(outFile.toPath());
 
             } catch (IOException | XDocReportException e) {
                 e.printStackTrace();
@@ -169,16 +169,16 @@ public class Utils {
 
     public byte[] insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt) {
 
-        try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + docName));) {
+        try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + "templates/" + docName));) {
             Context context = new Context();
             context.putVar("employees", employees);
 
-            File outFile = new File(absolutePath + "out_" + docName );
+            File outFile = new File(absolutePath + "templates/out_" + docName );
             OutputStream os = new FileOutputStream(outFile);
 
             JxlsHelper.getInstance().processTemplate(is, os, context);
 
-            return FileUtils.readFileToByteArray(outFile);
+            return Files.readAllBytes(outFile.toPath());
 
         } catch (IOException e) {
             e.printStackTrace();
