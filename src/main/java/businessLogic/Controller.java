@@ -56,10 +56,10 @@ public class Controller {
         return  formDao.getTemplatesFromCategory(category);
     }
 
-    public static byte[] generateDocument(DocExt ext, ArrayList fields, String templateName) {
+    public static byte[] generateDocument(DocExt ext, ArrayList fields, String templateName, boolean toBeZipped) {
         Builder b = builderFactory.createBuilder(ext);
         try {
-            return b.generateDoc(fields, templateName);
+            return b.generateDoc(fields, templateName, toBeZipped);
         } catch(IOException | ParseException e) {
             e.printStackTrace();
         }

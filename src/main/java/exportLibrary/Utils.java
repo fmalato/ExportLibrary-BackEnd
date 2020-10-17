@@ -24,7 +24,11 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 
 public class Utils {
@@ -43,7 +47,7 @@ public class Utils {
      * @param inExt the input extension of the file
      * @param outExt A DocExt containing the output file extension
      */
-    public byte[] insertFields(ArrayList fieldValues, String docName, DocExt inExt, DocExt outExt) {
+    public byte[] insertFields(ArrayList fieldValues, String docName, DocExt inExt, DocExt outExt, boolean toBeZipped) {
 
         if(Arrays.asList(this.supportedExts).contains(inExt)) {
             try {
@@ -96,12 +100,15 @@ public class Utils {
                     }
                 }
 
-                //File outFile = new File(absolutePath + "out_" + docName );
-                File dataDir = new File(System.getProperty("jboss.server.data.dir"));
-                File outFile = new File(dataDir, "out_" + docName);
+                File outFile = new File(absolutePath + "out_" + docName );
                 OutputStream out = new FileOutputStream(outFile);
                 report.process(context, out);
-
+                if(toBeZipped) {
+                    byte[] ba = zipFile(outFile.getPath());
+                    // Workaround: needs a better solution
+                    outFile.delete();
+                    return ba;
+                }
 
                 return FileUtils.readFileToByteArray(outFile);
 
@@ -167,7 +174,7 @@ public class Utils {
         return cf;
     }
 
-    public File insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt) {
+    public byte[] insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt) {
 
         try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + docName));) {
             Context context = new Context();
@@ -178,7 +185,7 @@ public class Utils {
 
             JxlsHelper.getInstance().processTemplate(is, os, context);
 
-            return outFile;
+            return FileUtils.readFileToByteArray(outFile);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -189,4 +196,29 @@ public class Utils {
         return null;
 
     }
+
+    private static byte[] zipFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            String zipFileName = file.getPath().concat(".zip");
+
+            FileOutputStream fos = new FileOutputStream(zipFileName);
+            ZipOutputStream zos = new ZipOutputStream(fos);
+
+            zos.putNextEntry(new ZipEntry(file.getName()));
+
+            byte[] bytes = Files.readAllBytes(Paths.get(filePath));
+            zos.write(bytes, 0, bytes.length);
+            zos.closeEntry();
+            zos.close();
+            return bytes;
+
+        } catch (FileNotFoundException ex) {
+            System.err.format("The file %s does not exist", filePath);
+        } catch (IOException ex) {
+            System.err.println("I/O error: " + ex);
+        }
+        return null;
+    }
+
 }

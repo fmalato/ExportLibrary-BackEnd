@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public interface Builder {
 
-    default byte[] generateDoc(ArrayList jArray, String templateName) throws IOException, ParseException {
+    default byte[] generateDoc(ArrayList jArray, String templateName, boolean toBeZipped) throws IOException, ParseException {
         return null;
     }
 

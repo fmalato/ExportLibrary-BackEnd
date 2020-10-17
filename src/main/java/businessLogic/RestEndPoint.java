@@ -61,7 +61,8 @@ public class RestEndPoint {
         byte[] entity = Controller.generateDocument(
                             Utils.getFileExtension(jObj.get("metadata").toString()),
                             (ArrayList)jObj.get("data"),
-                            jObj.get("metadata").toString());
+                            jObj.get("metadata").toString(),
+                            (boolean)jObj.get("zip"));
         HashMap<String, String> hm = new HashMap<>();
         hm.put("response", new String(entity));
         JSONObject jObjResponse = new JSONObject(hm);

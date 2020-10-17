@@ -39,10 +39,10 @@ public class DocxBuilder implements Builder {
      * @param templateName name of the template to read from the "templates" folder
      */
     @Override
-    public byte[] generateDoc(ArrayList fields, String templateName) throws IOException, ParseException {
+    public byte[] generateDoc(ArrayList fields, String templateName, boolean toBeZipped) throws IOException, ParseException {
 
         try {
-            return util.insertFields(fields, templateName, util.getFileExtension(templateName), this.outExt);
+            return util.insertFields(fields, templateName, util.getFileExtension(templateName), this.outExt, toBeZipped);
         } catch(NullPointerException e) {
             e.printStackTrace();
         }
