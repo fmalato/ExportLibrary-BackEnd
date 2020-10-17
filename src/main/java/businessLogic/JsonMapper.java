@@ -13,7 +13,6 @@ public class JsonMapper {
         JSONArray jsonForm = new JSONArray();
 
         try {
-            System.out.println(form.getFields());
             String jsonString = form.getFields();
             JSONParser parser = new JSONParser();
             jsonForm = (JSONArray) parser.parse(jsonString);

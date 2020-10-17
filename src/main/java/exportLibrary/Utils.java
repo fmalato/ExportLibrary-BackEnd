@@ -25,6 +25,7 @@ import java.awt.image.RenderedImage;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.zip.ZipEntry;
@@ -110,7 +111,7 @@ public class Utils {
                     return ba;
                 }
 
-                return FileUtils.readFileToByteArray(outFile);
+                return Files.readAllBytes(outFile.toPath());
 
             } catch (IOException | XDocReportException e) {
                 e.printStackTrace();
@@ -176,19 +177,17 @@ public class Utils {
 
     public byte[] insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt) {
 
-        try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + docName));) {
+        try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + "templates/" + docName));) {
             Context context = new Context();
             context.putVar("employees", employees);
 
-            File outFile = new File(absolutePath + "out_" + docName );
+            File outFile = new File(absolutePath + "templates/out_" + docName );
             OutputStream os = new FileOutputStream(outFile);
 
             JxlsHelper.getInstance().processTemplate(is, os, context);
 
-            return FileUtils.readFileToByteArray(outFile);
+            return Files.readAllBytes(outFile.toPath());
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
