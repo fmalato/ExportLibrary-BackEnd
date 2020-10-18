@@ -35,7 +35,7 @@ import java.util.zip.ZipOutputStream;
 public class Utils {
 
     private final DocExt[] supportedExts;
-    private final String absolutePath = "/Users/federico/IdeaProjects/ExportLibrary-BackEnd/";
+    private final String absolutePath = "/Users/francescogradi/Desktop/ExportLibrary-BackEnd/";
 
     public Utils() {
         this.supportedExts = DocExt.values();
@@ -105,10 +105,7 @@ public class Utils {
                 OutputStream out = new FileOutputStream(outFile);
                 report.process(context, out);
                 if(toBeZipped) {
-                    byte[] ba = zipFile(outFile.getPath());
-                    // Workaround: needs a better solution
-                    outFile.delete();
-                    return ba;
+                    return zipFile(outFile.getPath());
                 }
 
                 return Files.readAllBytes(outFile.toPath());
@@ -175,7 +172,7 @@ public class Utils {
         return cf;
     }
 
-    public byte[] insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt) {
+    public byte[] insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt, boolean toBeZipped) {
 
         try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + "templates/" + docName));) {
             Context context = new Context();
@@ -185,6 +182,10 @@ public class Utils {
             OutputStream os = new FileOutputStream(outFile);
 
             JxlsHelper.getInstance().processTemplate(is, os, context);
+
+            if(toBeZipped) {
+                return zipFile(outFile.getPath());
+            }
 
             return Files.readAllBytes(outFile.toPath());
 
@@ -210,7 +211,9 @@ public class Utils {
             zos.write(bytes, 0, bytes.length);
             zos.closeEntry();
             zos.close();
-            return bytes;
+
+            file = new File(zipFileName);
+            return Files.readAllBytes(file.toPath());
 
         } catch (FileNotFoundException ex) {
             System.err.format("The file %s does not exist", filePath);

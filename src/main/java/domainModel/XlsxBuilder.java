@@ -37,7 +37,7 @@ public class XlsxBuilder implements Builder {
             } catch (Exception e) { continue; }
         }
 
-        return util.insertTableFields(employees, templateName, Utils.getFileExtension(templateName), this.outExt);
+        return util.insertTableFields(employees, templateName, Utils.getFileExtension(templateName), this.outExt, toBeZipped);
 
     }
 
