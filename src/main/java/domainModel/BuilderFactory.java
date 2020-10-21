@@ -6,9 +6,7 @@ import java.util.Arrays;
 
 public class BuilderFactory {
 
-    public BuilderFactory() {
-
-    }
+    public BuilderFactory() { }
 
     public Builder createBuilder(DocExt ext) {
 

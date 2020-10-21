@@ -27,7 +27,6 @@ public class Controller {
     private static final BuilderFactory builderFactory;
     private static final EntityManagerFactory emf;
 
-
     static {
         builderFactory = new BuilderFactory();
         emf = Persistence.createEntityManagerFactory("exportlibrary");
@@ -69,7 +68,5 @@ public class Controller {
     public static EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
-
 
 }

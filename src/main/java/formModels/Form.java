@@ -26,9 +26,7 @@ public abstract class Form {
         this.fields = "[]";
     }
 
-    public Form() {
-
-    }
+    public Form() { }
 
     public String getFields() {
         return fields;

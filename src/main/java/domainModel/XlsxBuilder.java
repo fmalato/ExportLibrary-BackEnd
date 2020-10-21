@@ -5,6 +5,7 @@ import exportLibrary.Utils;
 import formModels.HospitalEmployee;
 
 import org.json.simple.parser.ParseException;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,6 @@ public class XlsxBuilder implements Builder {
     public byte[] generateDoc(ArrayList fields, String templateName, boolean toBeZipped) throws IOException, ParseException {
 
         List<HospitalEmployee> employees = new ArrayList<>();
-
         for (Object element : fields) {
             try {
                 employees.add(new HospitalEmployee(((LinkedHashMap) element).get("firstname").toString(),

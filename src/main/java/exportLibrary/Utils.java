@@ -172,6 +172,16 @@ public class Utils {
         return cf;
     }
 
+    /**
+     * Replace fields in xlsx files, using  jxls library. Return a bytes array that will be given to front end, that
+     * represents the final xlsx document.
+     * @param employees
+     * @param docName
+     * @param fileExtension
+     * @param outExt
+     * @param toBeZipped
+     * @return byte[] of document
+     */
     public byte[] insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt, boolean toBeZipped) {
 
         try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + "templates/" + docName));) {
@@ -197,6 +207,11 @@ public class Utils {
 
     }
 
+    /**
+     * Function that provides an optional file zipping. It returns again a byte array of document.
+     * @param filePath
+     * @return document representation in byte array.
+     */
     private static byte[] zipFile(String filePath) {
         try {
             File file = new File(filePath);
