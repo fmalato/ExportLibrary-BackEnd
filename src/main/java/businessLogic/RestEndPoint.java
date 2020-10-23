@@ -21,6 +21,10 @@ import java.util.HashMap;
 @Path("/")
 public class RestEndPoint {
 
+    /**
+     * Get all the categories store in the database
+     * @return a Response containing a List of categories as body
+     */
     @GET
     @Path("/categories")
     @Produces(MediaType.APPLICATION_JSON)
@@ -32,6 +36,10 @@ public class RestEndPoint {
         return rb.build();
     }
 
+    /**
+     * Get the correct type of form from the database
+     * @return a Response containing a Json with a series of Fields to be filled
+     */
     @GET
     @Path("/form/{category}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,6 +51,10 @@ public class RestEndPoint {
         return rb.build();
     }
 
+    /**
+     * Get the name of the selected form template
+     * @return a Response containing a string with the name of the template
+     */
     @GET
     @Path("/templates/{category}")
     @Produces(MediaType.APPLICATION_JSON)
