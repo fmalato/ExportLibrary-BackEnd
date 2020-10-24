@@ -182,7 +182,7 @@ public class Utils {
      * @param toBeZipped
      * @return byte[] of document
      */
-    public byte[] insertTableFields(List<HospitalEmployee> employees, String docName, DocExt fileExtension, DocExt outExt, boolean toBeZipped) {
+    public <T> byte[] insertTableFields(List<T> employees, String docName, DocExt fileExtension, DocExt outExt, boolean toBeZipped) {
 
         try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + "templates/" + docName));) {
             Context context = new Context();

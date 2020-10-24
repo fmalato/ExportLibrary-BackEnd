@@ -1,5 +1,9 @@
 package formModels;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+
 public class HospitalEmployee {
     private String firstname;
     private String lastname;
@@ -21,6 +25,20 @@ public class HospitalEmployee {
         this.job = "";
         this.salary = 0;
         this.extraHours = 0;
+    }
+
+    public static List<HospitalEmployee> getEmployees(ArrayList fields) {
+        List<HospitalEmployee> employees = new ArrayList<>();
+        for (Object element : fields) {
+            try {
+                employees.add(new HospitalEmployee(((LinkedHashMap) element).get("firstname").toString(),
+                        ((LinkedHashMap) element).get("lastname").toString(),
+                        ((LinkedHashMap) element).get("job").toString(),
+                        (int) ((LinkedHashMap) element).get("salary"),
+                        (int) ((LinkedHashMap) element).get("extraHours")));
+            } catch (Exception e) { continue; }
+        }
+        return employees;
     }
 
     public String getFirstname() {

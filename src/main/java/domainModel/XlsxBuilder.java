@@ -4,6 +4,7 @@ import exportLibrary.DocExt;
 import exportLibrary.Utils;
 import formModels.HospitalEmployee;
 
+import formModels.TuscanyProvince;
 import org.json.simple.parser.ParseException;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
@@ -25,19 +26,15 @@ public class XlsxBuilder implements Builder {
 
     @Override
     public byte[] generateDoc(ArrayList fields, String templateName, boolean toBeZipped) throws IOException, ParseException {
-
-        List<HospitalEmployee> employees = new ArrayList<>();
-        for (Object element : fields) {
-            try {
-                employees.add(new HospitalEmployee(((LinkedHashMap) element).get("firstname").toString(),
-                        ((LinkedHashMap) element).get("lastname").toString(),
-                        ((LinkedHashMap) element).get("job").toString(),
-                        (int) ((LinkedHashMap) element).get("salary"),
-                        (int) ((LinkedHashMap) element).get("extraHours")));
-            } catch (Exception e) { continue; }
+        if (templateName.equals("GestioneSalariOspedale.xlsx")) {
+            return util.insertTableFields(HospitalEmployee.getEmployees(fields), templateName,
+                    Utils.getFileExtension(templateName), this.outExt, toBeZipped);
+        } else if (templateName.equals("CovidToscana.xlsx")){
+            return util.insertTableFields(TuscanyProvince.getProvinces(fields), templateName,
+                    Utils.getFileExtension(templateName), this.outExt, toBeZipped);
+        } else {
+            return null;
         }
-
-        return util.insertTableFields(employees, templateName, Utils.getFileExtension(templateName), this.outExt, toBeZipped);
 
     }
 

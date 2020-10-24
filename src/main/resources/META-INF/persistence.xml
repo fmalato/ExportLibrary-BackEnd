@@ -10,6 +10,7 @@
         <class>formModels.CurriculumForm</class>
         <class>formModels.SickNoteForm</class>
         <class>formModels.HospitalSalaryForm</class>
+        <class>formModels.TuscanyCovidForm</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

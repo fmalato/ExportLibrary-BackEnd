@@ -47,4 +47,13 @@ public class JsonMapper {
         return field;
     }
 
+    public static JSONObject createField(String label, String type, String value) {
+        JSONObject field = new JSONObject();
+        field.put("label", label);
+        field.put("type", type);
+        field.put("value", value);
+
+        return field;
+    }
+
 }

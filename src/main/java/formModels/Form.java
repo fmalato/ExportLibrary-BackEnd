@@ -16,7 +16,7 @@ public abstract class Form {
     private String name;
     @NotNull
     private String category;
-    @Column(length = 1000)
+    @Column(length = 10000)
     protected String fields;
 
 

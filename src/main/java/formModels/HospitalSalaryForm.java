@@ -18,7 +18,10 @@ public class HospitalSalaryForm extends Form {
         form.add(JsonMapper.createField("salary", "number"));
         form.add(JsonMapper.createField("extraHours", "number"));
 
-        this.fields = form.toJSONString();
+        JSONArray extForm = new JSONArray();
+        extForm.add(form);
+
+        this.fields = extForm.toJSONString();
     }
 
     public HospitalSalaryForm() {

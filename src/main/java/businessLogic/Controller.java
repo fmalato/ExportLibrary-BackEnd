@@ -1,8 +1,6 @@
 package businessLogic;
 
-import formModels.Form;
-import formModels.HospitalSalaryForm;
-import formModels.SickNoteForm;
+import formModels.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -13,7 +11,6 @@ import java.util.ArrayList;
 
 import databaseManagement.FormDao;
 import domainModel.BuilderFactory;
-import formModels.CurriculumForm;
 import domainModel.Builder;
 import exportLibrary.DocExt;
 
@@ -36,8 +33,7 @@ public class Controller {
 
         FormDao formDao = new FormDao(getEntityManager());
 
-        //formDao.persist(new CurriculumForm("CurriculumModelloLondra.docx", "Curriculum Londra"));
-        //formDao.persist(new HospitalSalaryForm("GestioneSalariOspedale.xlsx", "Salari Ospedale"));
+        // formDao.persist(new TuscanyCovidForm("CovidToscana.xlsx", "COVID Toscana"));
 
         return formDao.getCategories();
     }
