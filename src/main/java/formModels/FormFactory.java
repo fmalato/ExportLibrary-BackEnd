@@ -3,24 +3,23 @@ package formModels;
 
 public class FormFactory {
 
-    public FormFactory() {
+    public FormFactory() { }
 
-    }
+    public Form createForm(String formName, String category) {
 
-    public Form createForm(Long formId, String formName, String category) {
-
-        switch (formId.intValue()) {
-            case 1:
+        switch (category) {
+            case "Curriculum":
                 return new CurriculumForm(formName, category);
-            case 2:
-                System.out.println("Form 2");
-            case 3:
-                System.out.println("Form 3");
-            case 4:
-                System.out.println("Form 4");
+            case "Certificato di Malattia":
+                return new SickNoteForm(formName, category);
+            case "Salari Ospedale":
+                return new HospitalSalaryForm(formName, category);
+            case "COVID Toscana":
+                return new TuscanyCovidForm(formName, category);
         }
-        return null;
-        
+        System.out.println("Form not found");
+        throw new RuntimeException();
+
     }
 
 }
