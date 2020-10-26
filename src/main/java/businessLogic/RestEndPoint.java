@@ -43,8 +43,8 @@ public class RestEndPoint {
     @GET
     @Path("/form/{category}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFormCategory(@PathParam("category") String category) {
-        Response.ResponseBuilder rb = Response.ok(Controller.getDBFormCategory(category));
+    public Response getForm(@PathParam("category") String category) {
+        Response.ResponseBuilder rb = Response.ok(Controller.getDBForm(category));
         rb.header("Access-Control-Allow-Origin", "*");
         rb.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");
         rb.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
@@ -58,8 +58,8 @@ public class RestEndPoint {
     @GET
     @Path("/templates/{category}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTemplateNameCategory(@PathParam("category") String category) {
-        Response.ResponseBuilder rb = Response.ok(Controller.getDBTemplateNameCategory(category));
+    public Response getTemplateNames(@PathParam("category") String category) {
+        Response.ResponseBuilder rb = Response.ok(Controller.getDBTemplateNames(category));
         rb.header("Access-Control-Allow-Origin", "*");
         rb.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS");
         rb.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");

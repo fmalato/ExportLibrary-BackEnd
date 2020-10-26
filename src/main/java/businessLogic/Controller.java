@@ -38,13 +38,13 @@ public class Controller {
         return formDao.getCategories();
     }
 
-    public static JSONArray getDBFormCategory(String category) {
+    public static JSONArray getDBForm(String category) {
 
         FormDao formDao = new FormDao(getEntityManager());
         return formDao.getForm(category);
     }
 
-    public static JSONArray getDBTemplateNameCategory(String category) {
+    public static JSONArray getDBTemplateNames(String category) {
 
         FormDao formDao = new FormDao(getEntityManager());
         return  formDao.getTemplates(category);
