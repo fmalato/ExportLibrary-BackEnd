@@ -3,7 +3,6 @@ package exportLibrary;
 import formModels.CurriculumForm;
 import formModels.Form;
 
-import formModels.HospitalEmployee;
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.document.IXDocReport;
 import fr.opensagres.xdocreport.document.images.FileImageProvider;
@@ -11,9 +10,8 @@ import fr.opensagres.xdocreport.document.images.IImageProvider;
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
 import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
-
 import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
-import org.apache.commons.io.FileUtils;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jxls.common.Context;
@@ -21,10 +19,8 @@ import org.jxls.util.JxlsHelper;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.*;
 import java.lang.reflect.Field;
-import java.nio.file.Files;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;

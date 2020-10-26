@@ -31,7 +31,7 @@ public class FormDao extends GenericDao<Form> {
         return jsonResultList;
     }
 
-    public Form getFormFromCategory(String category) {
+    public JSONArray getForm(String category) {
         checkIfInitialized();
         entityManager.getTransaction().begin();
         List<Form> formList =  entityManager.createQuery(String.format("select f from Form f where f.category = '%s'",
@@ -43,10 +43,10 @@ public class FormDao extends GenericDao<Form> {
             form = formList.get(0);
         } catch(EntityNotFoundException e) { System.out.println(e); }
 
-        return form;
+        return JsonMapper.toJson(form);
     }
 
-    public JSONArray getTemplatesFromCategory(String category) {
+    public JSONArray getTemplates(String category) {
         checkIfInitialized();
         entityManager.getTransaction().begin();
         ArrayList<String> resultList = (ArrayList<String>) entityManager.createQuery(String.format("select distinct name from Form where category = '%s'",

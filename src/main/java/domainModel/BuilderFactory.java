@@ -16,7 +16,7 @@ public class BuilderFactory {
             } else if (ext.equals(DocExt.XLSX)) {
                 return new XlsxBuilder();
             } else {
-                return new ZipBuilder();
+                return null;
             }
         }
         else {

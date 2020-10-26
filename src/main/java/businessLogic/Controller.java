@@ -41,15 +41,13 @@ public class Controller {
     public static JSONArray getDBFormCategory(String category) {
 
         FormDao formDao = new FormDao(getEntityManager());
-        Form form = formDao.getFormFromCategory(category);
-
-        return JsonMapper.toJson(form);
+        return formDao.getForm(category);
     }
 
     public static JSONArray getDBTemplateNameCategory(String category) {
 
         FormDao formDao = new FormDao(getEntityManager());
-        return  formDao.getTemplatesFromCategory(category);
+        return  formDao.getTemplates(category);
     }
 
     public static byte[] generateDocument(DocExt ext, ArrayList fields, String templateName, boolean toBeZipped) {

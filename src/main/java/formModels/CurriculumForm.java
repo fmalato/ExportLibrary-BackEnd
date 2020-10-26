@@ -1,8 +1,7 @@
 package formModels;
 
-import businessLogic.JsonMapper;
+import databaseManagement.JsonMapper;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import javax.persistence.Entity;
 
