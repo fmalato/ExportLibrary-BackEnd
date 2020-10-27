@@ -1,17 +1,14 @@
 package businessLogic;
 
-import formModels.*;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import databaseManagement.FormDao;
-import domainModel.BuilderFactory;
-import domainModel.Builder;
+import docBuilders.BuilderFactory;
+import docBuilders.Builder;
 import exportLibrary.DocExt;
 
 import javax.persistence.EntityManager;

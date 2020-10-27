@@ -1,4 +1,4 @@
-package domainModel;
+package docBuilders;
 
 import exportLibrary.DocExt;
 import java.util.Arrays;

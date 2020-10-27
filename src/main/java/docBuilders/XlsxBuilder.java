@@ -1,18 +1,15 @@
-package domainModel;
+package docBuilders;
 
 import exportLibrary.DocExt;
 import exportLibrary.Utils;
-import formModels.HospitalEmployee;
 
-import formModels.TuscanyProvince;
+import JxlsClasses.HospitalEmployee;
+import JxlsClasses.TuscanyProvince;
+
 import org.json.simple.parser.ParseException;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 public class XlsxBuilder implements Builder {
 

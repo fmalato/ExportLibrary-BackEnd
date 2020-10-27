@@ -1,10 +1,7 @@
-package domainModel;
+package docBuilders;
 
-import exportLibrary.Utils;
-import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
