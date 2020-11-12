@@ -31,7 +31,7 @@ import java.util.zip.ZipOutputStream;
 public class Utils {
 
     private final DocExt[] supportedExts;
-    private final String absolutePath = "/Users/francescogradi/Desktop/ExportLibrary-BackEnd/";
+    private final String absolutePath = "/Users/federico/IdeaProjects/ExportLibrary-BackEnd/";
 
     public Utils() {
         this.supportedExts = DocExt.values();
@@ -171,7 +171,7 @@ public class Utils {
     /**
      * Replace fields in xlsx files, using  jxls library. Return a bytes array that will be given to front end, that
      * represents the final xlsx document.
-     * @param employees
+     * @param fields
      * @param docName
      * @param fileExtension
      * @param outExt
@@ -183,6 +183,7 @@ public class Utils {
         try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + "templates/" + docName));) {
             Context context = new Context();
             context.putVar("fields", fields);
+            context.putVar("numProvince", fields.size());
 
             File outFile = new File(absolutePath + "templates/out_" + docName );
             OutputStream os = new FileOutputStream(outFile);
