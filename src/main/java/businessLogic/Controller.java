@@ -1,5 +1,7 @@
 package businessLogic;
 
+import formModels.CurriculumForm;
+import formModels.TuscanyCovidForm;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 
@@ -30,7 +32,7 @@ public class Controller {
 
         FormDao formDao = new FormDao(getEntityManager());
 
-        // formDao.persist(new TuscanyCovidForm("CovidToscana.xlsx", "COVID Toscana"));
+        //formDao.persist(new CurriculumForm("CurriculumModelloLondra.xlsx", "Curriculum"));
 
         return formDao.getCategories();
     }

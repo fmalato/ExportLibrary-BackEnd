@@ -11,6 +11,7 @@ public class TuscanyProvince {
     private int recovered;
     private int deaths;
     private int intensiveCares;
+    private int numProvince;
 
     public TuscanyProvince(String province, int dailyCases, int globalCases, int recovered, int deaths, int intensiveCares) {
         this.province = province;
@@ -19,6 +20,7 @@ public class TuscanyProvince {
         this.recovered = recovered;
         this.deaths = deaths;
         this.intensiveCares = intensiveCares;
+        this.numProvince = 0;
     }
 
     public String getProvince() {
@@ -53,6 +55,10 @@ public class TuscanyProvince {
         this.intensiveCares = intensiveCares;
     }
 
+    public int getNumProvince() { return this.numProvince; }
+
+    public void setNumProvince(int numProvince) { this.numProvince = numProvince; }
+
     public TuscanyProvince() {
         this.province = "";
         this.dailyCases = 0;
@@ -60,6 +66,7 @@ public class TuscanyProvince {
         this.recovered = 0;
         this.deaths = 0;
         this.intensiveCares = 0;
+        this.numProvince = 0;
     }
 
     public int getRecovered() {
@@ -89,6 +96,9 @@ public class TuscanyProvince {
                         (int) ((LinkedHashMap) element).get("deaths"),
                         (int) ((LinkedHashMap) element).get("intensiveCares")));
             } catch (Exception e) { continue; }
+        }
+        for(TuscanyProvince prov : provinces) {
+            prov.setNumProvince(fields.size());
         }
         return provinces;
     }

@@ -1,5 +1,6 @@
 package exportLibrary;
 
+import JxlsClasses.TuscanyProvince;
 import formModels.CurriculumForm;
 import formModels.Form;
 
@@ -183,7 +184,6 @@ public class Utils {
         try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + "templates/" + docName));) {
             Context context = new Context();
             context.putVar("fields", fields);
-            context.putVar("numProvince", fields.size());
 
             File outFile = new File(absolutePath + "templates/out_" + docName );
             OutputStream os = new FileOutputStream(outFile);
