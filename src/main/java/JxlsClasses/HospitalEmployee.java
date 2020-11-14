@@ -10,6 +10,7 @@ public class HospitalEmployee {
     private String job;
     private int salary;
     private int extraHours;
+    private int hourlyPay;
 
     public HospitalEmployee(String firstname, String lastname, String job, int salary, int extraHours) {
         this.firstname = firstname;
@@ -17,6 +18,13 @@ public class HospitalEmployee {
         this.job = job;
         this.salary = salary;
         this.extraHours = extraHours;
+        if (this.job.equals("Infermiere")) {
+            this.hourlyPay = 15;
+        } else if (this.job.equals("Medico")) {
+            this.hourlyPay = 25;
+        } else {
+            this.hourlyPay = 10;
+        }
     }
 
     public HospitalEmployee() {
@@ -25,6 +33,7 @@ public class HospitalEmployee {
         this.job = "";
         this.salary = 0;
         this.extraHours = 0;
+        this.hourlyPay = 0;
     }
 
     public static List<HospitalEmployee> getEmployees(ArrayList fields) {
@@ -79,5 +88,13 @@ public class HospitalEmployee {
 
     public void setExtraHours(int extraHours) {
         this.extraHours = extraHours;
+    }
+
+    public int getHourlyPay() {
+        return hourlyPay;
+    }
+
+    public void setHourlyPay(int hourlyPay) {
+        this.hourlyPay = hourlyPay;
     }
 }
