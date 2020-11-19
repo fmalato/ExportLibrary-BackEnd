@@ -32,7 +32,7 @@ import java.util.zip.ZipOutputStream;
 public class Utils {
 
     private final DocExt[] supportedExts;
-    private final String absolutePath = "/Users/federico/IdeaProjects/ExportLibrary-BackEnd/";
+    private final String absolutePath = "/Users/francescogradi/Desktop/ExportLibrary-BackEnd/";
 
     public Utils() {
         this.supportedExts = DocExt.values();
@@ -179,9 +179,11 @@ public class Utils {
      * @param toBeZipped
      * @return byte[] of document
      */
-    public <T> byte[] insertTableFields(List<T> fields, String docName, DocExt fileExtension, DocExt outExt, boolean toBeZipped) {
+    public <T> byte[] insertTableFields(List<T> fields, String docName, DocExt fileExtension, DocExt outExt,
+                                        boolean toBeZipped) {
 
-        try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath + "templates/" + docName));) {
+        try(InputStream is = new BufferedInputStream(new FileInputStream( absolutePath +
+                "templates/" + docName));) {
             Context context = new Context();
             context.putVar("fields", fields);
 
