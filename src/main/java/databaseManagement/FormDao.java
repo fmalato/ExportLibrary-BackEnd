@@ -3,7 +3,7 @@ package databaseManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 
-import formModels.Form;
+import domainModel.Form;
 import org.json.simple.JSONArray;
 
 import java.util.ArrayList;

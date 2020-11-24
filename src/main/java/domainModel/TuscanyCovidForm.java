@@ -1,4 +1,4 @@
-package formModels;
+package domainModel;
 
 import databaseManagement.JsonMapper;
 import org.json.simple.JSONArray;

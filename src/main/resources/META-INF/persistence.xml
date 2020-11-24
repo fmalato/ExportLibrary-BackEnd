@@ -7,10 +7,10 @@
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>formModels.CurriculumForm</class>
-        <class>formModels.SickNoteForm</class>
-        <class>formModels.HospitalSalaryForm</class>
-        <class>formModels.TuscanyCovidForm</class>
+        <class>domainModel.CurriculumForm</class>
+        <class>domainModel.SickNoteForm</class>
+        <class>domainModel.HospitalSalaryForm</class>
+        <class>domainModel.TuscanyCovidForm</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

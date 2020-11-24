@@ -1,6 +1,6 @@
 package databaseManagement;
 
-import formModels.Form;
+import domainModel.Form;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

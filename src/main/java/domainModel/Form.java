@@ -1,9 +1,7 @@
-package formModels;
+package domainModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
-import exportLibrary.DocExt;
 
 
 @Entity

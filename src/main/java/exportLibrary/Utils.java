@@ -1,8 +1,7 @@
 package exportLibrary;
 
-import JxlsClasses.TuscanyProvince;
-import formModels.CurriculumForm;
-import formModels.Form;
+import domainModel.CurriculumForm;
+import domainModel.Form;
 
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.document.IXDocReport;
@@ -205,6 +204,9 @@ public class Utils {
         return null;
 
     }
+
+
+
 
     /**
      * Function that provides an optional file zipping. It returns again a byte array of document.

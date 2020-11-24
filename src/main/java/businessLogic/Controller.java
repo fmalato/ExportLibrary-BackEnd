@@ -1,7 +1,5 @@
 package businessLogic;
 
-import formModels.CurriculumForm;
-import formModels.TuscanyCovidForm;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
 

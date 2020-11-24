@@ -1,4 +1,4 @@
-package formModels;
+package domainModel;
 
 
 public class FormFactory {
