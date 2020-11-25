@@ -72,7 +72,6 @@ public class RestEndPoint {
     @Produces(MediaType.APPLICATION_JSON)
     public Response generateDoc(JSONObject jObj) {
         byte[] entity = Controller.generateDocument(
-                            Utils.getFileExtension(jObj.get("metadata").toString()),
                             (ArrayList)jObj.get("data"),
                             jObj.get("metadata").toString(),
                             (boolean)jObj.get("zip"));

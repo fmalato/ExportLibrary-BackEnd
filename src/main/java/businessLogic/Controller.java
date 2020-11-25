@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import databaseManagement.FormDao;
 import docBuilders.BuilderFactory;
 import docBuilders.Builder;
-import exportLibrary.DocExt;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -47,8 +46,8 @@ public class Controller {
         return  formDao.getTemplates(category);
     }
 
-    public static byte[] generateDocument(DocExt ext, ArrayList fields, String templateName, boolean toBeZipped) {
-        Builder b = builderFactory.createBuilder(ext);
+    public static byte[] generateDocument(ArrayList fields, String templateName, boolean toBeZipped) {
+        Builder b = builderFactory.createBuilder(templateName);
         try {
             return b.generateDoc(fields, templateName, toBeZipped);
         } catch(IOException | ParseException e) {
