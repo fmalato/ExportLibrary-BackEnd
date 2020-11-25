@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 
 import static io.restassured.RestAssured.given;
 
+
 public class EndpointCommunicationGetTest {
 
     private static RequestSpecification baseSpec;
@@ -48,11 +49,27 @@ public class EndpointCommunicationGetTest {
 
     @Test
     public void getCategoriesTest() {
-        given().spec(baseSpec)
+        HashSet<String> set = new HashSet<>();
+        set.add("Curriculum");
+        set.add("Certificato di Malattia");
+        set.add("COVID Toscana");
+        set.add("Salari Ospedale");
+        JSONArray categories = given().spec(baseSpec)
                 .when()
                 .get("categories")
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .extract()
+                .as(JSONArray.class);
+        HashSet<String> extractedSet = new HashSet<>();
+        Iterator jsonArrayItr = categories.iterator();
+
+        while(jsonArrayItr.hasNext()) {
+            String currentObj = (String)jsonArrayItr.next();
+            extractedSet.add(currentObj);
+        }
+
+        assert extractedSet.equals(set);
     }
 
     @Test
@@ -69,35 +86,6 @@ public class EndpointCommunicationGetTest {
         JSONArray form = given().spec(formSpec)
                 .when()
                 .get("Curriculum")
-                .then()
-                .statusCode(200)
-                .extract()
-                .as(JSONArray.class);
-        HashSet<String> extractedSet = new HashSet<>();
-        Iterator jsonArrayItr = form.iterator();
-
-        while(jsonArrayItr.hasNext()) {
-            LinkedHashMap<String, String> currentObj = (LinkedHashMap<String, String>)jsonArrayItr.next();
-            extractedSet.add(currentObj.get("label"));
-        }
-        assert extractedSet.equals(set);
-
-    }
-
-    @Test
-    public void getFormCategoryCurriculumLondraTest() {
-        HashSet<String> set = new HashSet<>();
-        set.add("firstname");
-        set.add("lastname");
-        set.add("dateofBirth");
-        set.add("address");
-        set.add("phone");
-        set.add("mail");
-        set.add("list");
-        set.add("image");
-        JSONArray form = given().spec(formSpec)
-                .when()
-                .get("Curriculum Londra")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -145,7 +133,7 @@ public class EndpointCommunicationGetTest {
     }
 
     @Test
-    public void getFormCategoryGestioneSalatiOspedaleTest() {
+    public void getFormCategoryGestioneSalariOspedaleTest() {
         HashSet<String> set = new HashSet<>();
         set.add("firstname");
         set.add("lastname");
@@ -171,15 +159,93 @@ public class EndpointCommunicationGetTest {
     }
 
     @Test
+    public void getFormCategoryCovidToscanaTest() {
+        HashSet<String> set = new HashSet<>();
+        set.add("province");
+        set.add("dailyCases");
+        set.add("globalCases");
+        set.add("recovered");
+        set.add("deaths");
+        set.add("intensiveCares");
+        JSONArray form = given().spec(formSpec)
+                .when()
+                .get("Covid Toscana")
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(JSONArray.class);
+        HashSet<String> extractedSet = new HashSet<>();
+        // this is needed since Covid Toscana has a fixed number of elements inside the JSONArray
+        ArrayList firstProvince = (ArrayList)form.get(0);
+        Iterator jsonArrayItr = firstProvince.iterator();
+
+        while(jsonArrayItr.hasNext()) {
+            LinkedHashMap<String, String> currentObj = (LinkedHashMap<String, String>)jsonArrayItr.next();
+            extractedSet.add(currentObj.get("label"));
+        }
+        assert extractedSet.equals(set);
+
+    }
+
+    @Test
     public void getTemplateNameCategoryTest() {
-        JSONArray template = given().spec(templateSpec)
+        HashSet<String> set = new HashSet<>();
+        set.add("CurriculumEuropeo.docx");
+        set.add("CurriculumModelloLondra.docx");
+        JSONArray templates = given().spec(templateSpec)
                 .when()
                 .get("Curriculum")
                 .then()
                 .statusCode(200)
                 .extract()
                 .as(JSONArray.class);
-        assert template.get(0).equals("CurriculumEuropeo.docx");
+        HashSet<String> extractedSet = new HashSet<>();
+        Iterator jsonArrayItr = templates.iterator();
+
+        while(jsonArrayItr.hasNext()) {
+            String currentObj = (String)jsonArrayItr.next();
+            extractedSet.add(currentObj);
+        }
+        assert extractedSet.equals(set);
+    }
+
+    @Test
+    public void getTemplateNameSicknessTest() {
+        JSONArray templates = given().spec(templateSpec)
+                .when()
+                .get("Certificato di Malattia")
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(JSONArray.class);
+
+        assert templates.get(0).equals("CertificatoMalattia.docx");
+    }
+
+    @Test
+    public void getTemplateNameCovidTest() {
+        JSONArray templates = given().spec(templateSpec)
+                .when()
+                .get("Covid Toscana")
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(JSONArray.class);
+
+        assert templates.get(0).equals("CovidToscana.xlsx");
+    }
+
+    @Test
+    public void getTemplateNameSalariesTest() {
+        JSONArray templates = given().spec(templateSpec)
+                .when()
+                .get("Salari Ospedale")
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(JSONArray.class);
+
+        assert templates.get(0).equals("GestioneSalariOspedale.xlsx");
     }
 
 }

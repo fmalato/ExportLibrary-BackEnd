@@ -17,6 +17,7 @@ public class EndpointDocumentCreationPostTest {
     private static JSONObject formPayload;
     private static JSONObject notePayload;
     private static JSONObject tablePayload;
+    private static JSONObject sTablePayload;
 
     private static RequestSpecification formSpec;
 
@@ -38,7 +39,7 @@ public class EndpointDocumentCreationPostTest {
         JSONArray dataFormPayload = new JSONArray();
         String[] formFieldNames = {"firstname", "lastname", "address", "phone", "mail", "dateofBirth", "list", "image"};
         String[] formFieldTypes = {"text", "text", "text", "text", "text", "date", "list", "image"};
-        String[] formFieldValues = {"a", "b", "c", "1234", "e@f.com", "11/11/11", "[]", "image"};
+        String[] formFieldValues = {"a", "b", "c", "1234", "e@f.com", "11/11/11", null, null};
         for(int i = 0; i < formFieldNames.length; i++) {
             JSONObject jObj = new JSONObject();
             jObj.put("label", formFieldNames[i]);
@@ -65,7 +66,7 @@ public class EndpointDocumentCreationPostTest {
             dataNotePayload.add(jObj);
         }
         notePayload.put("metadata", "CertificatoMalattia.docx");
-        notePayload.put("data", dataFormPayload);
+        notePayload.put("data", dataNotePayload);
         notePayload.put("zip", false);
         // Initializing tablePayload
         tablePayload = new JSONObject();
@@ -81,8 +82,28 @@ public class EndpointDocumentCreationPostTest {
             dataTablePayload.add(jObj);
         }
         tablePayload.put("metadata", "GestioneSalariOspedale.xlsx");
-        tablePayload.put("data", dataFormPayload);
+        tablePayload.put("data", dataTablePayload);
         tablePayload.put("zip", false);
+        // Initializing staticTablePayload
+        sTablePayload = new JSONObject();
+        JSONArray dataSTablePayload = new JSONArray();
+        JSONArray payloadElement = new JSONArray();
+        String[] sTableFieldNames = {"province", "dailyCases", "globalCases", "recovered", "deaths", "intensiveCares"};
+        String[] sTableFieldTypes = {"text", "number", "number", "number", "number", "number"};
+        String[] sTableFieldValues = {"a", "12", "23", "34", "45", "56"};
+        for(int i = 0; i < tableFieldNames.length; i++) {
+            JSONObject jObj = new JSONObject();
+            jObj.put("label", sTableFieldNames[i]);
+            jObj.put("type", sTableFieldTypes[i]);
+            jObj.put("value", sTableFieldValues[i]);
+            payloadElement.add(jObj);
+        }
+        for(int i = 0; i < 10; i++) {
+            dataSTablePayload.add(payloadElement);
+        }
+        sTablePayload.put("metadata", "CovidToscana.xlsx");
+        sTablePayload.put("data", dataSTablePayload);
+        sTablePayload.put("zip", false);
     }
 
     @Test
@@ -101,7 +122,7 @@ public class EndpointDocumentCreationPostTest {
          given()
                 .spec(formSpec)
                 .contentType(ContentType.JSON)
-                .body(formPayload)
+                .body(notePayload)
                 .post("Certificato%20di%20Malattia/export")
                 .then()
                 .statusCode(200);
@@ -112,8 +133,19 @@ public class EndpointDocumentCreationPostTest {
          given()
                 .spec(formSpec)
                 .contentType(ContentType.JSON)
-                .body(formPayload)
+                .body(tablePayload)
                 .post("Salari%20Ospedale/export")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    public void postStaticTablePayload() {
+        given()
+                .spec(formSpec)
+                .contentType(ContentType.JSON)
+                .body(tablePayload)
+                .post("Covid%20Toscana/export")
                 .then()
                 .statusCode(200);
     }
