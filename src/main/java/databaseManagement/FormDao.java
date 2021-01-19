@@ -12,8 +12,8 @@ import java.util.List;
 
 public class FormDao extends GenericDao<Form> {
 
-    public FormDao(EntityManager entityManager) {
-        super(entityManager);
+    public FormDao() {
+        super();
         setClass(Form.class);
     }
 

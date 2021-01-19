@@ -10,24 +10,18 @@ import databaseManagement.FormDao;
 import docBuilders.BuilderFactory;
 import docBuilders.Builder;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 
 public class Controller {
 
     private static final BuilderFactory builderFactory;
-    private static final EntityManagerFactory emf;
 
     static {
         builderFactory = new BuilderFactory();
-        emf = Persistence.createEntityManagerFactory("exportlibrary");
     }
 
     public static JSONArray getDBCategories() {
 
-        FormDao formDao = new FormDao(getEntityManager());
+        FormDao formDao = new FormDao();
 
         //formDao.persist(new CurriculumForm("CurriculumModelloLondra.xlsx", "Curriculum"));
 
@@ -36,13 +30,13 @@ public class Controller {
 
     public static JSONArray getDBForm(String category) {
 
-        FormDao formDao = new FormDao(getEntityManager());
+        FormDao formDao = new FormDao();
         return formDao.getForm(category);
     }
 
     public static JSONArray getDBTemplateNames(String category) {
 
-        FormDao formDao = new FormDao(getEntityManager());
+        FormDao formDao = new FormDao();
         return  formDao.getTemplates(category);
     }
 
@@ -54,10 +48,6 @@ public class Controller {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static EntityManager getEntityManager() {
-        return emf.createEntityManager();
     }
 
 }

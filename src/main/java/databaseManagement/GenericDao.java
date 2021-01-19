@@ -1,16 +1,21 @@
 package databaseManagement;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class GenericDao<T> {
 
     public static final String SELECT_ALL_FROM_ENTITY_TABLE = "FROM %s";
+    private static EntityManagerFactory emf;
+
     protected final EntityManager entityManager;
     protected Class<T> persistentClass;
 
-    public GenericDao(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public GenericDao() {
+        emf = Persistence.createEntityManagerFactory("exportlibrary");
+        this.entityManager = emf.createEntityManager();
     }
 
     public void setClass(Class<T> persistenceClass) {
